@@ -156,10 +156,9 @@ function nReactorGUI.drawBars(x, y)
 	term.setCursor(x/10, y/20*7+4)
 	term.write("Burn Time Remaining:")
 	term.setCursor(x/10+25, y/20*7+4)
-	term.write(tostring(math.floor(nReactorFunctions.remainingProcessTime()))
+	term.write(tostring(math.floor(nReactorFunctions.remainingProcessTime())))
 	term.setCursor(x/10+40, y/20*7+4)
 	term.write("Ticks")
-	end
 end --end drawBars
 
 function nReactorGUI.bar(color1, posX, posY, sizeW, sizeH)
