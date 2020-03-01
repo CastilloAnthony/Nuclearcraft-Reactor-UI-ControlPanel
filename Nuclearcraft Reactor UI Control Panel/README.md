@@ -19,3 +19,7 @@
 	
 	You will need a Tier 3 Graphics Card and at least two Tier 1 Memory Chips for a total of 384k RAM and atleast
 	a Tier 1 CPU, a harddrive with OpenOS, and the GUI files and functions.
+	
+	Use the command "nReactorGUIStart" to begin the gui program.
+	Alternatively use "nReactorBegin" to run a very simplified program that will only display a text based
+	panel.
