@@ -383,7 +383,7 @@ function nReactorGUI.drawInfo()
 	
 	term.setCursor(1, y)
 	gpu.setBackground(0)
-	term.write("Version: 1.0")
+	term.write("Version: 1.1")
 end --end drawInfo
 
 function nReactorGUI.drawChart()
