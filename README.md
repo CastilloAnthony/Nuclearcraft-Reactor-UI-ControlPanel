@@ -23,3 +23,5 @@
 	Use the command "nReactorGUIStart" to begin the gui program.
 	Alternatively use "nReactorBegin" to run a very simplified program that will only display a text based
 	panel.
+
+	I plan on rearranging the UI slightly, but for now its perfectly functional.
