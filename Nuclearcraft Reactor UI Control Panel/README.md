@@ -2,7 +2,8 @@
 	Developed by Anthony Castillo (MC Useraccount: Cao21745) 2/23/2020
 	Designed and tested for use with OpenComputers-MC1.12.2-1.7.4.153.jar and NuclearCraft-2.17c-1.12.2.jar.
 	
-	Email suggesttions to Cao21745@yahoo.com or post on the project's github site.
+	This is still a work in progress so any suggestions will be taken into consideration.
+	Email suggesttions to Cao21745@yahoo.com
 	
 	This is a simple program that is designed to automatically control a Nuclearcraft Reactor while drawing
 	a fairly simple UI.
@@ -22,3 +23,5 @@
 	Use the command "nReactorGUIStart" to begin the gui program.
 	Alternatively use "nReactorBegin" to run a very simplified program that will only display a text based
 	panel.
+
+	I plan on rearranging the UI slightly, but for now its perfectly functional.

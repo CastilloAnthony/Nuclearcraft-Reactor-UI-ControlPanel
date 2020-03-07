@@ -134,33 +134,35 @@ end --end button
 function nReactorGUI.buttonOperations() 
 	local screenAddress, extra,touchX, touchY = event.pull(1, "touch")
 	if (screenAddress ~= nil) then
-		if ((touchX >= (x/10*8)) and (touchX <= (x/10*8+buttonSize*2))) and ((touchY >= (y/10*3)) and (touchY <= (y/10*3+buttonSize))) then
+		if ((touchX >= (x/10*8)) and (touchX <= (x/10*8+buttonSize*2))) and ((touchY >= (y/10*3)) and (touchY <= (y/10*3+buttonSize))) then 	--On/Off switch
 			nReactorFunctions.changeReactorState()
-		elseif ((touchX >= (x/10*7)) and (touchX <= (x/10*7+buttonSize*2))) and ((touchY >= (y/10*3)) and (touchY <= (y/10*3+buttonSize))) then
+			nReactorGUI.drawButtons()
+		elseif ((touchX >= (x/10*7)) and (touchX <= (x/10*7+buttonSize*2))) and ((touchY >= (y/10*3)) and (touchY <= (y/10*3+buttonSize))) then	--Auto Switch button
 			nReactorGUI.changeAutoState()
-		elseif ((touchX >= (x/10*8)) and (touchX <= (x/10*8+4))) and ((touchY >= (y/10*9)) and (touchY <= (y/10*9+3))) then
+			nReactorGUI.drawButtons()
+		elseif ((touchX >= (x/10*8)) and (touchX <= (x/10*8+4))) and ((touchY >= (y/10*9)) and (touchY <= (y/10*9+3))) then 					--Exit button
 			if nReactorFunctions.checkState() then
 				nReactorFunctions.changeReactorState()
-				nReactorGUI.drawButtons()
 			end
 			term.setCursor(1,y)
 			gpu.setBackground(0)
 			print("Shutting down the reactor.")
 			print("Exiting program")
 			os.exit()
-		elseif ((touchX >= (x/10*7)) and (touchX <= (x/10*7+7))) and ((touchY >= (y/10*5)) and (touchY <= (y/10*5+3))) then
+		elseif ((touchX >= (x/10*7+1)) and (touchX <= (x/10*7+7+1))) and ((touchY >= (y/10*5)) and (touchY <= (y/10*5+3))) then 				--Sleep mode button
 			nReactorGUI.changeSleepState()
-		elseif ((touchX >= (x/10*8+5)) and (touchX <= (x/10*8+5+5))) and ((touchY >= (y/10*5)) and (touchY <= (y/10*5+3))) then
+			nReactorGUI.drawButtons()
+		elseif ((touchX >= (x/10*8+5)) and (touchX <= (x/10*8+5+5))) and ((touchY >= (y/10*5)) and (touchY <= (y/10*5+3))) then					--Increment sleep button
 			maxSleepTime = maxSleepTime + 5
-		elseif ((touchX >= (x/10*8)) and (touchX <= (x/10*8+5))) and ((touchY >= (y/10*5)) and (touchY <= (y/10*5+3))) then
+		elseif ((touchX >= (x/10*8)) and (touchX <= (x/10*8+5))) and ((touchY >= (y/10*5)) and (touchY <= (y/10*5+3))) then						--Decrement sleep button
 			if maxSleepTime > 0 then
 				maxSleepTime = maxSleepTime - 5
 			end
-		elseif ((touchX >= (x/10*8)) and (touchX <= (x/10*8+12))) and ((touchY >= (y/10*6)) and (touchY <= (y/10*6+3))) then
+		elseif ((touchX >= (x/10*8)) and (touchX <= (x/10*8+12))) and ((touchY >= (y/10*6)) and (touchY <= (y/10*6+3))) then					--Histograph button
 			nReactorGUI.changeChartType()
+			nReactorGUI.drawButtons()
 		end
 	end
-	nReactorGUI.drawButtons()
 end --end buttonOperations
 
 function nReactorGUI.drawFrame()
@@ -175,7 +177,8 @@ function nReactorGUI.drawFrame()
 	nReactorGUI.bar(0x5A5A5A, x/10, y/10, x/10*8, 3)						--Powerlevel Bar
 	nReactorGUI.bar(0x5A5A5A, x/10, y/10*2, x/10*8, 3)						--HeatLevel Bar
 	
-	nReactorGUI.bar(0x5A5A5A, x/10, y/20*7-1, 50, 9)						--Draws the info box frame
+	nReactorGUI.bar(0x5A5A5A, x/10, y/20*6-1, 50, 9)						--Draws the info box frame
+	--nReactorGUI.bar(0x5A5A5A, x/10+51, y/20*6-1, 50, 9)					--Draws the second info box frame
 	
 	nReactorGUI.button(0x5A5A5A, x/10*8, y/10*3, buttonSize*2, buttonSize)	--Enable/Disable Button
 	nReactorGUI.button(0x5A5A5A, x/10*7, y/10*3, buttonSize*2, buttonSize)	--Auto/Manual Button
@@ -198,14 +201,11 @@ function nReactorGUI.drawBars()
 	table.insert(powerList, 1, nReactorFunctions.checkEnergyLevel())
 	table.insert(heatList, 1, nReactorFunctions.checkHeatLevel())
 	
-	
 	gpu.setBackground(0x5A5A5A)
 	
 	--Powerlevel wording
 	term.setCursor(x/10+13, y/10-1)
-	term.write(" ")
-	term.setCursor(x/10+14, y/10-1)
-	term.write(" ")
+	term.write("   ")
 	term.setCursor(x/10+13, y/10-1)
 	term.write(math.floor(nReactorFunctions.checkEnergyLevel()*100))
 	term.setCursor(x/10+16, y/10-1)
@@ -213,9 +213,7 @@ function nReactorGUI.drawBars()
 	
 	--Temperature level wording
 	term.setCursor(x/10+13, y/10*2-1)
-	term.write(" ")
-	term.setCursor(x/10+14, y/10*2-1)
-	term.write(" ")
+	term.write("   ")
 	term.setCursor(x/10+13, y/10*2-1)
 	term.write(math.floor(nReactorFunctions.checkHeatLevel()*100))
 	term.setCursor(x/10+16, y/10*2-1)
@@ -272,14 +270,13 @@ function nReactorGUI.drawButtons()
 	term.setCursor(x/10*8+1, y/10*9+1)
 	term.write("Exit")
 	
-	nReactorGUI.button(0x5A5A5A, x/10*7, y/10*5-1, x/10*2, 1)
-	nReactorGUI.button(0x5A5A5A, x/10*7, y/10*5, 7, 3)						--Draw Sleep Button
+	nReactorGUI.button(0x5A5A5A, x/10*7+1, y/10*5, 7, 3)						--Draw Sleep Button
 	if enableSleep then
-		term.setCursor(x/10*7+1, y/10*5+1)
+		term.setCursor(x/10*7+1+1, y/10*5+1)
 		gpu.setBackground(0x999999)
 		term.write("Sleep")
 	else
-		term.setCursor(x/10*7+1, y/10*5+1)
+		term.setCursor(x/10*7+1+1, y/10*5+1)
 		gpu.setBackground(0xC3C3C3)
 		term.write("Sleep")
 	end
@@ -305,69 +302,81 @@ function nReactorGUI.drawButtons()
 end --end drawButtons
 
 function nReactorGUI.drawInfo() 
-	nReactorGUI.bar(0x5A5A5A, x/10+26, y/20*7-1, 14, 8) --Clears the variable info sections so that old numbers do not overlap with new ones
+	local infoBoxPositionY = y/20*6
 	gpu.setBackground(0x5A5A5A)
 	
-	term.setCursor(x/10+1, y/20*7)
+	term.setCursor(x/10+1, infoBoxPositionY)
 	term.write("Current Fuel:")
-	term.setCursor(x/10+26, y/20*7)
+	term.setCursor(x/10+26, infoBoxPositionY)
+	term.write("              ")				--Clears the previously stated information (using 14 spaces)
+	term.setCursor(x/10+26, infoBoxPositionY)
 	term.write(nReactorFunctions.fuelName())
 	
-	term.setCursor(x/10+1, y/20*7+1)
+	term.setCursor(x/10+1, infoBoxPositionY+1)
 	term.write("Power Output:")
-	term.setCursor(x/10+26, y/20*7+1)
+	term.setCursor(x/10+26, infoBoxPositionY+1)
+	term.write("              ")
+	term.setCursor(x/10+26, infoBoxPositionY+1)
 	term.write(tostring(nReactorFunctions.powerOutput()))
-	term.setCursor(x/10+41, y/20*7+1)
+	term.setCursor(x/10+41, infoBoxPositionY+1)
 	term.write("RF/T")
 	
-	term.setCursor(x/10+1, y/20*7+2)
+	term.setCursor(x/10+1, infoBoxPositionY+2)
 	term.write("Power Draw:")
-	term.setCursor(x/10+26, y/20*7+2)
+	term.setCursor(x/10+26, infoBoxPositionY+2)
+	term.write("              ")
+	term.setCursor(x/10+26, infoBoxPositionY+2)
 	term.write(tostring((math.floor(nReactorFunctions.checkEnergyChange()))*(-1)))
-	term.setCursor(x/10+41, y/20*7+2)
+	term.setCursor(x/10+41, infoBoxPositionY+2)
 	term.write("RF/T")
 	
-	term.setCursor(x/10+1, y/20*7+3)
+	term.setCursor(x/10+1, infoBoxPositionY+3)
 	term.write("Currently Stored Power:")
-	term.setCursor(x/10+26, y/20*7+3)
+	term.setCursor(x/10+26, infoBoxPositionY+3)
+	term.write("              ")
+	term.setCursor(x/10+26, infoBoxPositionY+3)
 	term.write(tostring(math.floor(nReactorFunctions.currentStoredPower())))
-	term.setCursor(x/10+41, y/20*7+3)
+	term.setCursor(x/10+41, infoBoxPositionY+3)
 	term.write("RF")
 	
-	term.setCursor(x/10+1, y/20*7+4)
+	term.setCursor(x/10+1, infoBoxPositionY+4)
 	term.write("Burn Time Remaining:")
-	term.setCursor(x/10+26, y/20*7+4)
+	term.setCursor(x/10+26, infoBoxPositionY+4)
+	term.write("              ")
+	term.setCursor(x/10+26, infoBoxPositionY+4)
 	term.write(tostring(math.floor(nReactorFunctions.remainingProcessTime())))
-	term.setCursor(x/10+41, y/20*7+4)
+	term.setCursor(x/10+41, infoBoxPositionY+4)
 	term.write("Ticks")
 	
-	term.setCursor(x/10+1, y/20*7+5)
+	term.setCursor(x/10+1, infoBoxPositionY+5)
 	term.write("Reactor Efficiency:")
-	term.setCursor(x/10+26, y/20*7+5)
+	term.setCursor(x/10+26, infoBoxPositionY+5)
+	term.write("              ")
+	term.setCursor(x/10+26, infoBoxPositionY+5)
 	term.write(tostring(math.floor(nReactorFunctions.efficiency())))
-	term.setCursor(x/10+41, y/20*7+5)
+	term.setCursor(x/10+41, infoBoxPositionY+5)
 	term.write("%")
 	
-	term.setCursor(x/10+1, y/20*7+6)
+	term.setCursor(x/10+1, infoBoxPositionY+6)
 	term.write("Reactor Heat Output:")
-	term.setCursor(x/10+26, y/20*7+6)
+	term.setCursor(x/10+26, infoBoxPositionY+6)
+	term.write("              ")
+	term.setCursor(x/10+26, infoBoxPositionY+6)
 	term.write(tostring(math.floor(nReactorFunctions.checkProcessHeat())))
-	--term.setCursor(x/10+41, y/20*76)
-	--term.write("Thermal Units")
 	
 	if enableSleep then
-		nReactorGUI.bar(0x5A5A5A, x/10*7, y/10*5-1, x/10*2, 1)
-		term.setCursor(x/10*7,y/10*5-1)
+		nReactorGUI.bar(0x5A5A5A, x/10*7+1, y/10*5-1, x/10*2-1, 1)
+		term.setCursor(x/10*7+1,y/10*5-1)
 		gpu.setBackground(0x5A5A5A)
 		term.write("Time until sleep:")
-		term.setCursor(x/10*7+18, y/10*5-1)
-		print(maxSleepTime-currentStep)
-		term.setCursor(x/10*7+25, y/10*5-1)
+		term.setCursor(x/10*7+18+1, y/10*5-1)
+		term.write(maxSleepTime-currentStep)
+		term.setCursor(x/10*7+25+1, y/10*5-1)
 		term.write("/")
 		term.write(maxSleepTime)
 	else
-		nReactorGUI.button(0x5A5A5A, x/10*7, y/10*5-1, x/10*2, 1)
-		term.setCursor(x/10*7,y/10*5-1)
+		nReactorGUI.button(0x5A5A5A, x/10*7+1, y/10*5-1, x/10*2-1, 1)
+		term.setCursor(x/10*7+1,y/10*5-1)
 		gpu.setBackground(0x5A5A5A)
 		term.write("Sleep Disabled")
 	end
@@ -380,20 +389,23 @@ end --end drawInfo
 function nReactorGUI.drawChart()
 	local position = 0
 	local maxPosition = x/10*6-2
-	nReactorGUI.bar(0x5A5A5A, x/10, y/10*6, x/10*6, y/10*4)
+	local barSize = 0
+	nReactorGUI.bar(0x5A5A5A, x/10, y/10*5, x/10*6, y/10*5) --Box outline
 	if chartMode then
 		for k in pairs(powerList) do 
 			if (position < maxPosition) and  (powerList[k] ~= nil) then
-					nReactorGUI.bar(0xCC4C4C, x/10+1+position, y-1-(y/10*4-2), 1, (y/10*4-2)*powerList[k])
+					barSize = math.floor(((y/10*5)-2)*powerList[k])
+					nReactorGUI.bar(0xCC4C4C, x/10+1+position, y-1-barSize, 1, barSize)
 			else
 				table.remove(powerList)
 			end
 			position = position + 1
 		end
 	else
-		for k in pairs(powerList) do 
+		for k in pairs(heatList) do
 			if (position < maxPosition) and (heatList[k] ~= nil) then
-				nReactorGUI.bar(0xF2B233, x/10+1+position, y-1-(y/10*4-2), 1, (y/10*4-2)*heatList[k])
+				barSize = math.floor(((y/10*5)-2)*heatList[k])
+				nReactorGUI.bar(0xF2B233, x/10+1+position, y-1-barSize, 1, barSize)
 			else
 				table.remove(heatList)
 			end
@@ -405,7 +417,7 @@ end --end drawChart
 function nReactorGUI.screenSleep()
 	gpu.setBackground(0)
 	tty.clear()
-	repeat 
+	repeat
 	nReactorFunctions.auto()
 	table.insert(powerList, 1, nReactorFunctions.checkEnergyLevel())
 	table.insert(heatList, 1, nReactorFunctions.checkHeatLevel())
@@ -449,7 +461,7 @@ end --end changeChartType
 function nReactorGUI.drawIteration() 
 	nReactorGUI.drawInfo()
 	nReactorGUI.drawBars()
-	nReactorGUI.drawChart() 
+	nReactorGUI.drawChart()
 	nReactorGUI.buttonOperations()
 end --end drawIteration
 
@@ -460,13 +472,8 @@ function nReactorGUI.step()
 		nReactorGUI.drawFrame()
 		repeat
 		nReactorGUI.buttonOperations()
-		nReactorGUI.drawIteration()
-		if isAuto then
-			nReactorGUI.autoMode()
-		else
-			nReactorGUI.manualMode()
-		end
-		currentStep=currentStep+1
+		if isAuto then nReactorGUI.autoMode() else nReactorGUI.manualMode() end 
+		if enableSleep then currentStep=currentStep+1 end --Increment sleep timer if sleep is allowed
 		until (currentStep > maxSleepTime)
 		currentStep = 0
 		if enableSleep then
