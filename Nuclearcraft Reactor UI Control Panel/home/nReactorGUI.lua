@@ -14,6 +14,7 @@ local tty = require("tty")
 local nReactorFunctions = require("nReactorFunctions")
 local term = require("term")
 local thread = require("thread")
+local computer = require("computer")
 local gpu = component.gpu
 
 --Initialize local variables
@@ -24,6 +25,8 @@ local x, y = 0, 0 --Initialize resolution components
 local buttonSize = 0 --Initialize buttonSize
 local maxSleepTime = 100
 local currentStep = 0
+local realTime1 = 0
+local mcTime1 = 0
 
 local powerList = {}	--Will store a bunch of power level values
 local heatList = {}		--Will store a bunch of heat level values
@@ -178,6 +181,7 @@ function nReactorGUI.drawFrame()
 	nReactorGUI.bar(0x5A5A5A, x/10, y/10*2, x/10*8, 3)						--HeatLevel Bar
 	
 	nReactorGUI.bar(0x5A5A5A, x/10, y/20*6-1, 50, 9)						--Draws the info box frame
+	--nReactorGUI.bar(0x5A5A5A, x/10, y/20*6-1, 50, 10)						--Draws the info box frame that includes an extra line
 	--nReactorGUI.bar(0x5A5A5A, x/10+51, y/20*6-1, 50, 9)					--Draws the second info box frame
 	
 	nReactorGUI.button(0x5A5A5A, x/10*8, y/10*3, buttonSize*2, buttonSize)	--Enable/Disable Button
@@ -304,6 +308,8 @@ end --end drawButtons
 function nReactorGUI.drawInfo() 
 	local infoBoxPositionY = y/20*6
 	gpu.setBackground(0x5A5A5A)
+	local time1 = computer.uptime()
+	local time2 = 0
 	
 	term.setCursor(x/10+1, infoBoxPositionY)
 	term.write("Current Fuel:")
@@ -364,6 +370,17 @@ function nReactorGUI.drawInfo()
 	term.setCursor(x/10+26, infoBoxPositionY+6)
 	term.write(tostring(math.floor(nReactorFunctions.checkProcessHeat())))
 	
+	--[[
+	term.setCursor(x/10+1, infoBoxPositionY+7)
+	term.write("Real Heat Change:")
+	term.setCursor(x/10+26, infoBoxPositionY+7)
+	term.write("              ")
+	term.setCursor(x/10+26, infoBoxPositionY+7)
+	term.write(tostring(nReactorFunctions.checkProcessHeat()*(computer.uptime()-realTime1)/0.05/nReactorFunctions.checkMaxHeatLevel()*100))
+	term.setCursor(x/10+41, infoBoxPositionY+7)
+	term.write("%")
+	]] --Omitting this until I can figure out the best math to use for it.
+	
 	if enableSleep then
 		nReactorGUI.bar(0x5A5A5A, x/10*7+1, y/10*5-1, x/10*2-1, 1)
 		term.setCursor(x/10*7+1,y/10*5-1)
@@ -383,7 +400,7 @@ function nReactorGUI.drawInfo()
 	
 	term.setCursor(1, y)
 	gpu.setBackground(0)
-	term.write("Version: 1.1")
+	term.write("Version: 1.0")
 end --end drawInfo
 
 function nReactorGUI.drawChart()
@@ -471,8 +488,19 @@ function nReactorGUI.step()
 	if nReactorGUI.setupResolution() then
 		nReactorGUI.drawFrame()
 		repeat
+		realTime1 = computer.uptime()
+		mcTime1 = os.time() * 1000/60/60 - 6000
 		nReactorGUI.buttonOperations()
 		if isAuto then nReactorGUI.autoMode() else nReactorGUI.manualMode() end 
+		
+		gpu.setBackground(0)
+		term.setCursor(1, 1)
+		term.write("     ")
+		term.setCursor(1, 1)
+		term.write(computer.uptime() - realTime1)
+		term.setCursor(6, 1)
+		term.write("Seconds per step")
+		
 		if enableSleep then currentStep=currentStep+1 end --Increment sleep timer if sleep is allowed
 		until (currentStep > maxSleepTime)
 		currentStep = 0

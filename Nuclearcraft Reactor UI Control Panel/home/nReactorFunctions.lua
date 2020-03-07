@@ -26,6 +26,9 @@ function nReactorFunctions.checkHeatLevel() end
 --Will return the current heat level of the reactor
 --This function returns a double (0.0100000)
 
+function nReactorFunctions.checkMaxHeatLevel() end
+--Will return the maximum heat level of the reactor
+
 function nReactorFunctions.checkEnergyChange() end
 --Returns the power change
 
@@ -73,6 +76,10 @@ end --end checkEnergyLevel
 function nReactorFunctions.checkHeatLevel()
 	return reactor.getHeatLevel() / reactor.getMaxHeatLevel()
 end --end cheackHeatLevel
+
+function nReactorFunctions.checkMaxHeatLevel()
+	return reactor.getMaxHeatLevel()
+end --end checkMaxHeatLevel
 
 function nReactorFunctions.checkEnergyChange() 
 	return reactor.getEnergyChange()
