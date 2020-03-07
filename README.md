@@ -24,4 +24,11 @@
 	Alternatively use "nReactorBegin" to run a very simplified program that will only display a text based
 	panel.
 
+	A word of caution, don't use this program to monitor a reactor where the heat level grows very rapidly. I'm afraid
+	that this program might not be able to shutoff the reactor fast enough before it has a meltdown. So long as the
+	reactor's heat output is less than 20% of its total heat capacity, the program should be able to catch it and
+	shutdown the reactor before it is too late. If the reactor does output more than 20% of it's max heat capacity
+	then I recommend that you use "nReactorBegin" to monitor the reactor. Atleast then it'll have a higher chance
+	of turning off the reactor intime. But really you should redesign your reactor or use a more stable fuel type.
+
 	I plan on rearranging the UI slightly, but for now its perfectly functional.
