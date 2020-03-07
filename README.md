@@ -30,5 +30,7 @@
 	shutdown the reactor before it is too late. If the reactor does output more than 20% of it's max heat capacity
 	then I recommend that you use "nReactorBegin" to monitor the reactor. Atleast then it'll have a higher chance
 	of turning off the reactor intime. But really you should redesign your reactor or use a more stable fuel type.
-
+	The program pretty much wont beable to catch anything that can cause a meltdown faster than 2 seconds unless
+	the program is in sleep mode, then it should be able to catch it far sooner.
+	
 	I plan on rearranging the UI slightly, but for now its perfectly functional.
