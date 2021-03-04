@@ -10,4 +10,8 @@
 
 local nReactorGUI = require("nReactorGUI")
 
-nReactorGUI.main()
+function start()
+	nReactorGUI.main()
+end --end start
+
+start()
