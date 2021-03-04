@@ -8,6 +8,6 @@
 	".lua" and it will begin running the Reactor control script.
 ]]--
 
-local nReactorGUI = require("nReactorGUI")
+local gui = require("nReactorGUI")
 
-nReactorGUI.main()
+gui.main()
