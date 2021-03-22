@@ -208,7 +208,7 @@ function nReactorGUI.drawBars()
 		table.remove(powerList)
 	end
 	if (#heatList > x/10*6-2) then
-		table.remove(healList)
+		table.remove(heatList)
 	end
 	
 	gpu.setBackground(0x5A5A5A)
@@ -448,7 +448,7 @@ function nReactorGUI.screenSleep()
 		table.remove(powerList)
 	end
 	while (#heatList > x/10*6-2) do
-		table.remove(healList)
+		table.remove(heatList)
 	end
 	until (event.pullMultiple(1, "motion", "touch") ~= nil)
 end --end screenSleep
