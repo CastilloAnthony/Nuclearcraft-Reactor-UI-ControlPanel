@@ -34,3 +34,5 @@
 	the program is in sleep mode, then it should be able to catch it far sooner.
 	
 	I plan on rearranging the UI slightly, but for now its perfectly functional.
+	
+	Here is a video showcasing what the UI looks like, and how it acts, in-game: https://youtu.be/riXulc5wzCA
