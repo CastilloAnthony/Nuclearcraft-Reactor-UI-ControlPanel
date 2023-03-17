@@ -3,7 +3,7 @@
 	Developed by Anthony Castillo (MC Useraccount: Cao21745) 2/23/2020
 	Designed and tested for use with OpenComputers-MC1.12.2-1.7.4.153.jar and NuclearCraft-2.17c-1.12.2.jar.
 	
-	Email suggesttions to Cao21745@yahoo.com or post on the project's github site.
+	Email suggestions to Cao21745@yahoo.com or post on the project's github site.
 	
 	This is a simple program that is designed to automatically control a Nuclearcraft Reactor while drawing
 	a fairly simple UI.
